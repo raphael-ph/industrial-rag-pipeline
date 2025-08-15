@@ -1,7 +1,5 @@
-import os
 from typing import List
 from dotenv import load_dotenv
-from pydantic import BaseModel, Field, model_validator
 
 # elasticsearch imports
 from elasticsearch import Elasticsearch, helpers

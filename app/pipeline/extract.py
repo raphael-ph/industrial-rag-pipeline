@@ -1,4 +1,4 @@
-import pymupdf  # PyMuPDF
+import pymupdf
 from uuid import uuid4
 from pydantic import BaseModel
 from typing import List, Optional, Union
