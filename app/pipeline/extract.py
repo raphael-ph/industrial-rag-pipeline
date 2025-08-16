@@ -17,6 +17,7 @@ _log = Logger.get_logger(__name__)
 class PdfReader(BaseModel):
     """Reader is linked to the user and session."""
     user_id: Optional[str] = None
+    session_id: Optional[str] = None
     chunk_size: int = 300
     chunk_overlap: int = 50
 
@@ -72,6 +73,7 @@ class PdfReader(BaseModel):
                 doc = Document(
                     document_id=doc_id,
                     title=title,
+                    session_id=self.session_id or "default_session",
                     user_id=self.user_id or "unknown_user",
                     chunk_id=chunk_id,
                     text=chunk_text,

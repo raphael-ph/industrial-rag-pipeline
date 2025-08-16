@@ -6,6 +6,7 @@ class Document(BaseModel):
     """Base class representing a Document chunk to be indexed in Elasticsearch"""
     document_id: str = Field(..., description="Unique id for the document")
     user_id: str = Field(..., description="Unique user id associated with the document")
+    session_id: str = Field(..., description="Unique session id associated with the document")
     title: str = Field(..., description="Original document title or filename.")
     chunk_id: int = Field(..., description="Sequential ID for the chunk within the document")
     text: str = Field(..., description="The actual chunk content")
@@ -22,4 +23,5 @@ class RAGReference(BaseModel):
 
 class RAGResponse(BaseModel):
     """Base model for structured RAG response generation"""
+    response: str = Field(..., description="Complete and fully detailed response to the user's query.")
     reference: List[RAGReference] = Field(..., description="A list of all excerpts and title references used to generate the response.")
