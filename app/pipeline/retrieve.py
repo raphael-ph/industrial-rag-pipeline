@@ -10,6 +10,19 @@ _log = Logger.get_logger(__name__)
 google_client = genai.Client()
 
 class ElasticRetriever:
+    """Retriver for getting documents stored in a Vector DB
+
+    ElasticRetriever provides semantic search capabilities by combining Google Generative AI 
+    embeddings with Elasticsearch vector search. It allows retrieving the most relevant 
+    documents from an Elasticsearch index based on semantic similarity to a given query.
+
+    Attributes:
+        index_name (str): Name of the Elasticsearch index where documents are stored.
+        embedding_model (str): The Google GenAI model used to generate embeddings (default: "gemini-embedding-001").
+        embedding_dim (int): Dimensionality of the embedding vectors (default: 768).
+        es (Elasticsearch): Elasticsearch client instance used to perform search queries.
+    """
+
     def __init__(
         self,
         elastic_url: str,
@@ -44,7 +57,7 @@ class ElasticRetriever:
                 "script_score": {
                     "query": {"match_all": {}},  # search all docs
                     "script": {
-                        "source": "cosineSimilarity(params.query_vector, 'embedding.values') + 1.0",
+                        "source": "cosineSimilarity(params.query_vector, 'embedding.values')",
                         "params": {"query_vector": query_embedding}
                     }
                 }
