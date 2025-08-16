@@ -1,6 +1,8 @@
-def main():
-    print("Hello from industrial-rag-pipeline!")
+from fastapi import FastAPI
+from api.endpoints import documents, question, health
 
+app = FastAPI(title="Industrial RAG API")
 
-if __name__ == "__main__":
-    main()
+app.include_router(health.router)
+app.include_router(documents.router, prefix="/documents", tags=["Documents"])
+app.include_router(question.router, prefix="/question", tags=["Question"])
