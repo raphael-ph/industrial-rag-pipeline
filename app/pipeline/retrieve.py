@@ -57,7 +57,7 @@ class ElasticRetriever:
                 "script_score": {
                     "query": {"match_all": {}},  # search all docs
                     "script": {
-                        "source": "cosineSimilarity(params.query_vector, 'embedding.values')",
+                        "source": "cosineSimilarity(params.query_vector, 'embedding')",
                         "params": {"query_vector": query_embedding}
                     }
                 }

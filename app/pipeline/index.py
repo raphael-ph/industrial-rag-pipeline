@@ -59,7 +59,7 @@ class ElasticVectorManager:
                     title=doc.title,
                     task_type="RETRIEVAL_DOCUMENT",
                     output_dimensionality=self.embedding_dim,)
-            ).embeddings
+            ).embeddings[0].values
 
             doc.embedding = embedding
             actions.append({
@@ -84,6 +84,7 @@ class ElasticVectorManager:
                     "document_id": {"type": "keyword"},
                     "title": {"type": "text"},
                     "user_id": {"type": "keyword"},
+                    "session_id": {"type": "keyword"},
                     "chunk_id": {"type": "integer"},
                     "text": {"type": "text"},
                     "embedding": {"type": "dense_vector", "dims": self.embedding_dim},
