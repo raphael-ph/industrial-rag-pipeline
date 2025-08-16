@@ -1,5 +1,6 @@
 import time
-from typing import Optional
+import json
+from typing import Optional, Dict, List
 from dotenv import load_dotenv
 
 # google imports
@@ -8,6 +9,7 @@ from google.genai import types
 
 # internal imports
 from .retrieve import ElasticRetriever
+from ..schemas.schema import RAGResponse
 from ..utils.logger import Logger
 from ..prompts.rag  import DEFAULT_RAG_PROMPT_TEMPLATE
 
@@ -35,7 +37,7 @@ class RAGAgent:
         self.additional_instructions = additional_instructions
         self.rag_prompt = rag_prompt
     
-    def run(self, user_query: str) -> str:
+    def run(self, user_query: str) -> List[Dict]:
         """Agent run method for generating completions based on documents.
         
         The run method retrieves relevant documents based on the user query and generates
@@ -105,6 +107,8 @@ class RAGAgent:
                 types.SafetySetting(category="HARM_CATEGORY_SEXUALLY_EXPLICIT", threshold="OFF"),
                 types.SafetySetting(category="HARM_CATEGORY_HARASSMENT", threshold="OFF"),
             ],
+            response_mime_type="application/json",
+            response_schema= RAGResponse, # ensure controlled generation to maintain the API response structure as a JSON
             system_instruction=[types.Part.from_text(text=self.system_instructions)],
             thinking_config=types.ThinkingConfig(thinking_budget=0),
         )
@@ -134,5 +138,7 @@ class RAGAgent:
                 else:
                     _log.error("Max retries reached. Raising exception.")
                     raise
+        
+        model_response = json.loads(response.text)
 
-        return response.text
+        return model_response
