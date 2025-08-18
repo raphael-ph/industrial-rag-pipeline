@@ -16,8 +16,6 @@
   - [Testing](#testing)
 - [Environment Variables](#environment-variables)
 - [Endpoints](#endpoints)
-- [Contributing](#contributing)
-- [License](#license)
 
 ---
 
