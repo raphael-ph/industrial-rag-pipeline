@@ -100,10 +100,6 @@ test-api:
 		echo "All tests completed!" \
 		pkill -f uvicorn)
 
-
-# Run all tests
-test: test-local test-api
-
 # Run all integration tests
 test: test-local test-api
 	@echo "All integration tests completed!"
