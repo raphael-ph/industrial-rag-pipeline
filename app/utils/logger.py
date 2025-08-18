@@ -20,7 +20,7 @@ class ColorFormatter(logging.Formatter):
 
 class Logger:
     @staticmethod
-    def get_logger(name: str, level=logging.DEBUG):
+    def get_logger(name: str, level=logging.INFO):
         logger = logging.getLogger(name)
         logger.setLevel(level)
 

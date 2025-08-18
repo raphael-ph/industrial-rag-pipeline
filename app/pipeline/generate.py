@@ -116,7 +116,7 @@ class RAGAgent:
         # generating response
         # developed a retry loop for the 429 resource exhausted problem
         # the loop has exponential backoff
-        max_retries = 3
+        max_retries = 10
         backoff = 1  # initial delay in seconds
 
         for attempt in range(max_retries):
