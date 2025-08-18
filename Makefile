@@ -2,6 +2,43 @@
 UVICORN_CMD = uvicorn main:app --reload --host 127.0.0.1 --port 8000
 
 # =============================================================================
+# 🚀 Development Server
+#
+# This target launches the FastAPI development server with hot-reload enabled
+# for the RAG (Retrieval-Augmented Generation) API pipeline.
+#
+# Features:
+#   • Health check validation to ensure proper startup
+#   • Connected to Elasticsearch index for RAG operations
+#
+# Usage:
+#   make dev
+#
+# Endpoints:
+#   • API Server: http://localhost:8000
+#   • Interactive Docs: http://localhost:8000/docs
+#   • Health Check: http://localhost:8000/health
+#   • Documents: http://localhost:8000/documents
+#   • Question: http://localhost:8000/question
+# 
+#
+# Notes:
+#   • Ensure Elasticsearch index is populated
+#   • Use Ctrl+C to stop the development server
+#   • Monitor console logs for debugging and API request insights
+# =============================================================================
+dev:
+	$(UVICORN_CMD) & \
+	echo "Starting development server..."; \
+	until curl -f http://localhost:8000/health 2>/dev/null; do \
+		sleep 1; \
+	done; \
+	echo "API ready!"; \
+	echo "Swagger docs: http://localhost:8000/docs"; \
+	echo "Health check: http://localhost:8000/health"; \
+	wait
+
+# =============================================================================
 # 🧪 Experiments / Playground
 #
 # This target launches an interactive Streamlit playground for experimenting
